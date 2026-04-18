@@ -76,6 +76,12 @@ input[type="submit"]:hover {
     // Lấy studentId từ request
     String studentId = request.getParameter("id");
     if (studentId == null || studentId.trim().isEmpty()) {
+        Object studentIdAttr = request.getAttribute("studentId");
+        if (studentIdAttr != null) {
+            studentId = studentIdAttr.toString();
+        }
+    }
+    if (studentId == null || studentId.trim().isEmpty()) {
         out.println("<h3 style='color:red; text-align:center;'>Student ID is missing!</h3>");
         return;
     }

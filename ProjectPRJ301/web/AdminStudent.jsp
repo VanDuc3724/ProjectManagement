@@ -158,7 +158,7 @@ a.delete:hover {
                 <td>${student.accId}</td>
                 <td>
                     <a href="editStudent.jsp?id=${student.stuId}" class="btn edit">Sửa</a>
-                    <a href="javascript:void(0);" class="btn delete" onclick="confirmDelete(${student.stuId})">Xóa</a>
+                    <a href="javascript:void(0);" class="btn delete" onclick="confirmDelete('${student.stuId}')">Xóa</a>
                 </td>
             </tr>
         </c:forEach>
