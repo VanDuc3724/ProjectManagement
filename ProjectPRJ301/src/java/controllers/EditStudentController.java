@@ -56,7 +56,13 @@ public class EditStudentController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        String id = request.getParameter("id");
+        if (id == null || id.trim().isEmpty()) {
+            response.sendRedirect("Admin_StudentController");
+            return;
+        }
+        request.setAttribute("studentId", id);
+        request.getRequestDispatcher("editStudent.jsp").forward(request, response);
     } 
 
     /** 
@@ -87,7 +93,8 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response)
         // Kiểm tra ID hợp lệ
         if (id == null || id.trim().isEmpty()) {
             request.setAttribute("errorMessage", "Mã sinh viên không được để trống!");
-            request.getRequestDispatcher("edit_student.jsp").forward(request, response);
+            request.setAttribute("studentId", id);
+            request.getRequestDispatcher("editStudent.jsp").forward(request, response);
             return;
         }
 
@@ -99,16 +106,19 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response)
             response.sendRedirect("Admin_StudentController"); // Cập nhật thành công
         } else {
             request.setAttribute("errorMessage", "Cập nhật không thành công!");
-            request.getRequestDispatcher("edit_student.jsp").forward(request, response);
+            request.setAttribute("studentId", id);
+            request.getRequestDispatcher("editStudent.jsp").forward(request, response);
         }
 
     } catch (NumberFormatException e) {
         request.setAttribute("errorMessage", "Dữ liệu không hợp lệ!");
-        request.getRequestDispatcher("edit_student.jsp").forward(request, response);
+        request.setAttribute("studentId", request.getParameter("id"));
+        request.getRequestDispatcher("editStudent.jsp").forward(request, response);
     } catch (Exception e) {
         e.printStackTrace();
         request.setAttribute("errorMessage", "Lỗi hệ thống!");
-        request.getRequestDispatcher("edit_student.jsp").forward(request, response);
+        request.setAttribute("studentId", request.getParameter("id"));
+        request.getRequestDispatcher("editStudent.jsp").forward(request, response);
     }
 }
 
